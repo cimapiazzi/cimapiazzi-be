@@ -10,8 +10,8 @@ module.exports = function (app) {
     endpoint: spacesEndpoint,
     region: "fra1",
     credentials: {
-      accessKeyId: "DO00R74W2WNVTG49WKFU",
-      secretAccessKey: "P3FOkWhN7rm9OFBd3nuPoRpY+HEspRFINBfkqvfkeO0",
+      accessKeyId: "DO003RNZ7LBYBUFYZN3Z",
+      secretAccessKey: "G9lWYNPj24SgTQjxvAf51TkAItFdUuRrVdtYDHT4vm0",
     },
   });
 
