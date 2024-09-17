@@ -57,14 +57,14 @@ UserCompanies = sequelize.define("user_companies", {
 db.role.belongsToMany(db.user, {
   foreignKey: "roleId",
   otherKey: "userId",
-  through: UserRoles,
+  through: db.userRoles,
   as: "users",
 });
 
 db.user.belongsToMany(db.role, {
   foreignKey: "userId",
   otherKey: "roleId",
-  through: UserRoles,
+  through: db.userRoles,
   as: "roles",
 });
 
