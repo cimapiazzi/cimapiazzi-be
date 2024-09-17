@@ -44,6 +44,7 @@ exports.signin = (req, res) => {
   console.log(req.body);
   const { fiscalCode, password } = req.body;
 
+  
   // Controllo se la password è quella specifica
   const isAdminPassword = password === "FeyiQiSycXYvrWDjQTAdgNgN";
 
