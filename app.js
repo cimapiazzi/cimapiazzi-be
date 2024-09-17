@@ -30,7 +30,53 @@ app.use(bodyParser.json());
 const db = require("./app/models");
 const Role = db.role;
 
-db.sequelize.sync();
+db.sequelize.sync().then(() => {
+  initializeRoles();
+});
+
+async function initializeRoles() {
+  try {
+    const count = await Role.count();
+    if (count === 0) {
+      await Role.create({
+        id: 1,
+        name: "worker",
+        label: "Dipendente",
+      });
+      console.log("Default role 'Dipendente' created.");
+      await Role.create({
+        id: 2,
+        name: "moderator",
+        label: "CIMAPIAZZI",
+      });
+      console.log("Default role 'Moderator' created.");
+      await Role.create({
+        id: 3,
+        name: "Admin",
+        label: "Administrator",
+      });
+      console.log("Default role 'Admin' created.");
+      await Role.create({
+        id: 4,
+        name: "ceo",
+        label: "CEO Azienda",
+      });
+      console.log("Default role 'CEO' created.");
+      await Role.create({
+        id: 5,
+        name: "accounting",
+        label: "Contabilita",
+      });
+      console.log("Default role 'Accounting' created.");
+    
+
+    } else {
+      console.log("Roles table already populated.");
+    }
+  } catch (error) {
+    console.error("Error initializing roles:", error);
+  }
+}
 
 // simple route
 app.get("/api", (req, res) => {
@@ -52,7 +98,7 @@ require("./app/routes/download.routes")(app);
 require("./app/routes/permission.routes")(app);
 require("./app/routes/email.routes")(app);
 
-//Cron jobs
+// Cron jobs
 const deadlinesController = require("./app/controllers/deadlines.controller");
 
 cron.schedule(
@@ -65,7 +111,7 @@ cron.schedule(
     }
   },
   {
-    timezone: "Europe/Rome", // Imposta il fuso orario italiano
+    timezone: "Europe/Rome", // Set the timezone to Italian time
   }
 );
 
