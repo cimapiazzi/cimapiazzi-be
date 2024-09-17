@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 const db = require("./app/models");
 const Role = db.role;
 const Company = db.company;
-const UserRoles = db.UserRoles;
+const UserRoles = db.userRoles;
 db.sequelize.sync().then(() => {
   initializeRoles();
   initializeCompanies();
