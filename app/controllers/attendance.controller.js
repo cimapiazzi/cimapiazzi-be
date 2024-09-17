@@ -2,6 +2,7 @@ const db = require("../models");
 
 var moment = require("moment/moment");
 
+
 const Attendance = db.attendance;
 const User = db.user;
 const Vehicle = db.vehicle;
