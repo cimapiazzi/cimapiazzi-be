@@ -29,9 +29,13 @@ app.use(bodyParser.json());
 // database
 const db = require("./app/models");
 const Role = db.role;
-
+const Company = db.company;
+const UserRoles = db.UserRoles;
 db.sequelize.sync().then(() => {
   initializeRoles();
+  initializeCompanies();
+  initializeUserRoles();
+
 });
 
 async function initializeRoles() {
@@ -68,13 +72,60 @@ async function initializeRoles() {
         label: "Contabilita",
       });
       console.log("Default role 'Accounting' created.");
-    
+
 
     } else {
       console.log("Roles table already populated.");
     }
   } catch (error) {
     console.error("Error initializing roles:", error);
+  }
+}
+
+async function initializeCompanies() {
+  try {
+    const count = await Company.count();
+    if (count === 0) {
+      await Company.create({
+        id: 1,
+        name: "Default Company",
+        reaNumber: "0000000000",
+        vat: "IT00000000000",
+        legalForm: "Societa a responsibilita limitata S.r.l.",
+        registeredOffice: "Via Example, 1",
+        headOffice: "Via Example, 1",
+        phone: "000-0000000",
+        email: "info@example.com",
+        pec: "example@pec.com",
+        website: "www.example.com",
+        description: "This is a default company entry.",
+        status: true,
+        ceoId: null,
+      });
+      console.log("Default company created.");
+    } else {
+      console.log("Companies table already populated.");
+    }
+  } catch (error) {
+    console.error("Error initializing companies:", error);
+  }
+}
+
+async function initializeUserRoles() {
+  try {
+    const count = await UserRoles.count();
+    if (count === 0) {
+      // Assuming role ID 1 and user ID 1 exist for demonstration purposes
+      await UserRoles.create({
+        userId: 1,
+        roleId: 3,
+      });
+      console.log("Default user role created.");
+    } else {
+      console.log("User roles table already populated.");
+    }
+  } catch (error) {
+    console.error("Error initializing user roles:", error);
   }
 }
 
