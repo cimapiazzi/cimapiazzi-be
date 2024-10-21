@@ -150,19 +150,20 @@ require("./app/routes/permission.routes")(app);
 require("./app/routes/email.routes")(app);
 
 // Cron jobs
-const deadlinesController = require("./app/controllers/deadlines.controller");
+const emailController = require("./app/controllers/email.controller");
 
 cron.schedule(
-  "0 8 * * *",
+  "30 14 * * *",
   async () => {
     try {
-      deadlinesController.sendEmailsUnpaidDeadlines();
+      emailController.sendBackupEmail();
+
     } catch (error) {
-      console.error("Error sending emails for unpaid deadlines:", error);
+      console.error("Errore durante il cron job:", error.message);
     }
   },
   {
-    timezone: "Europe/Rome", // Set the timezone to Italian time
+    timezone: "Europe/Rome", // Imposta il fuso orario italiano
   }
 );
 
