@@ -33,3 +33,19 @@ exports.createPlace = (req, res) => {
       res.status(500).send({ message: err.message });
     });
 };
+
+exports.deletePlace = (req, res) => {
+  Place.destroy({
+    where: { id: req.params.id },
+  })
+    .then((deletedCount) => {
+      if (deletedCount === 1) {
+        res.status(200).send({ message: "Luogo eliminato con successo!" });
+      } else {
+        res.status(404).send({ message: "Luogo non trovato!" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};

@@ -20,4 +20,9 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.createPlace
   );
+  app.delete(
+    "/api/place/deletePlace/:id",
+    [authJwt.verifyToken],
+    controller.deletePlace
+  );
 };
