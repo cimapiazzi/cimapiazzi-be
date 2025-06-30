@@ -120,15 +120,17 @@ module.exports = function (app) {
       });
 
       Promise.all(uploadPromises)
-        .then((results) => {
+        .then(async (results) => {
           const response = {
             success: true,
             message: "Documents uploaded successfully",
             files: results,
           };
 
+          const createdFiles = [];
+
           for (let result of results) {
-            +userDocuments.create({
+            await userDocuments.create({
               userId: userId,
               fiscalCode: fiscalCode,
               category: category,
@@ -140,13 +142,16 @@ module.exports = function (app) {
               releaseMonth: releaseMonth,
               releaseYear: releaseYear,
             });
-            var parts = result?.Key.split("/");
-            var fileName = parts[parts.length - 1];
 
-            res
-              .status(201)
-              .send({ message: fileName + " aggiunto con successo!" });
+            const parts = result?.Key.split("/");
+            const fileName = parts[parts.length - 1];
+            createdFiles.push(fileName);
           }
+
+          return res.status(201).send({
+            message: `${createdFiles.length} documento/i aggiunto/i con successo!`,
+            files: createdFiles,
+          });
         })
         .catch((error) => {
           const response = {
