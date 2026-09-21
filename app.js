@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const cron = require("node-cron");
 const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 
@@ -149,23 +148,15 @@ require("./app/routes/download.routes")(app);
 require("./app/routes/permission.routes")(app);
 require("./app/routes/email.routes")(app);
 
-// Cron jobs
-const emailController = require("./app/controllers/email.controller");
-
-cron.schedule(
-  "30 14 * * *",
-  async () => {
-    try {
-      emailController.sendBackupEmail();
-
-    } catch (error) {
-      console.error("Errore durante il cron job:", error.message);
-    }
-  },
-  {
-    timezone: "Europe/Rome", // Imposta il fuso orario italiano
-  }
-);
+// Backup email cron disabilitato (non inviare più a jordanavila1394@gmail.com)
+// const emailController = require("./app/controllers/email.controller");
+// cron.schedule("30 14 * * *", async () => {
+//   try {
+//     emailController.sendBackupEmail();
+//   } catch (error) {
+//     console.error("Errore durante il cron job:", error.message);
+//   }
+// }, { timezone: "Europe/Rome" });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
